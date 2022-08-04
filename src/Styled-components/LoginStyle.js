@@ -33,6 +33,9 @@ const LoginStyle = styled.div`
       color: #dbdbdb;
       padding-left: 5px;
     }
+    input:focus::placeholder{
+      color: transparent;
+    }
     button {
       all: initial;
       height: 12.5vw;
