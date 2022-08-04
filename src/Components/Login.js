@@ -5,7 +5,7 @@ import { loginUser } from "../services/requests";
 import LoginStyle from "../Styled-components/LoginStyle";
 import UserContext from "../UserContext";
 
-export default function LoginScreen() {
+export default function Login() {
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
   const [formLogin, setFormLogin] = useState({
@@ -25,7 +25,7 @@ export default function LoginScreen() {
     console.log(promise);
     promise.then((e) => {
       setUserData(e.data);
-      console.log(e)
+      console.log(e);
       navigate("/hoje");
     });
     promise.catch(() => {

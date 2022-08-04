@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/requests";
 import { useState } from "react";
 
-export default function RegisterScreen() {
+export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
