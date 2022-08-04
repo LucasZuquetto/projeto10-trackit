@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { loginUser } from "../services/requests";
 import LoginStyle from "../Styled-components/LoginStyle";
+import UserContext from "../UserContext";
 
 export default function LoginScreen() {
+  const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
   const [formLogin, setFormLogin] = useState({
     email: "",
@@ -22,8 +24,9 @@ export default function LoginScreen() {
     const promise = loginUser(formLogin);
     console.log(promise);
     promise.then((e) => {
-      console.log(e); //aqui está o data
-      navigate("/");
+      setUserData(e.data);
+      console.log(e)
+      navigate("/hoje");
     });
     promise.catch(() => {
       alert("houve um erro no seu login");
