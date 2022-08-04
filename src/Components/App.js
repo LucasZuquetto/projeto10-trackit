@@ -9,8 +9,6 @@ import History from "./History";
 import Habits from "./Habits";
 //botoes desabilitados no login e register
 //biblioteca spinner
-//redirecionamento rota /hoje
-//layout menu topo
 //progressbar
 
 export default function App() {

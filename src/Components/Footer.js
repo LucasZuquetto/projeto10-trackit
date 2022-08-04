@@ -28,6 +28,9 @@ const FooterStyle = styled.div`
   font-size: 18px;
   align-items: center;
   background-color: white;
+  span{
+    color:#52b6ff;
+  }
 `;
 
 const HojeFooter = styled(Link)`

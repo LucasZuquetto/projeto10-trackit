@@ -13,7 +13,7 @@ const LoginStyle = styled.div`
     font-size: 14px;
   }
   img {
-    width: 50vw;
+    width: 180px;
     margin-bottom: 30px;
   }
   form {
@@ -21,7 +21,7 @@ const LoginStyle = styled.div`
     flex-direction: column;
     width: 80vw;
     input {
-      height: 12.5vw;
+      height: 45px;
       margin-bottom: 7px;
       border: 1px solid #d5d5d5;
       border-radius: 5px;
@@ -38,7 +38,7 @@ const LoginStyle = styled.div`
     }
     button {
       all: initial;
-      height: 12.5vw;
+      height: 45px;
       background-color: #52b6ff;
       border-radius: 5px;
       display: flex;
