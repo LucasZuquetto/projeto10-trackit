@@ -12,5 +12,11 @@ function loginUser(loginObject) {
     loginObject
   );
 }
+function sendHabitInfo(createHabitObject, config) {
+  return axios.post(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    createHabitObject, config
+  );
+}
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, sendHabitInfo };

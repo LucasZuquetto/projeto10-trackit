@@ -4,7 +4,6 @@ import UserContext from "../UserContext";
 
 export default function Header() {
   const { UserData } = useContext(UserContext);
-  console.log(UserData);
   return (
       <HeaderStyle>
         <span>TrackIt</span>
