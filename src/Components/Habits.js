@@ -4,6 +4,7 @@ import { sendHabitInfo } from "../services/requests";
 import {
   AddHabits,
   ButtonInputHabit,
+  DaySelect,
   HabitsStyle,
   InputHabit,
 } from "../Styled-components/HabitsStyle";
@@ -11,9 +12,12 @@ import UserContext from "../UserContext";
 import Footer from "./Footer";
 import Header from "./Header";
 
+//se tiver mais de 1 habito criado, os habitos são listados, e a mensagem desaparece
+//
 export default function Habits() {
   const { UserData } = useContext(UserContext);
 
+  const [isCreatingHabit, setIsCreatingHabit] = useState(false)
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
 
@@ -43,9 +47,9 @@ export default function Habits() {
       <HabitsStyle>
         <AddHabits>
           <h1>Meus hábitos</h1>
-          <div>+</div>
+          <div onClick={() => setIsCreatingHabit(true) }>+</div>
         </AddHabits>
-        <InputHabit>
+        <InputHabit display={isCreatingHabit ? 'flex' : 'none'}>
           <input
             placeholder="nome do hábito"
             type="text"
@@ -104,7 +108,7 @@ export default function Habits() {
             </DaySelect>
           </div>
           <div>
-            <ButtonInputHabit color="#52B6FF" backgroundcolor="#FFFFFF">
+            <ButtonInputHabit onClick={() => setIsCreatingHabit(false) } color="#52B6FF" backgroundcolor="#FFFFFF">
               Cancelar
             </ButtonInputHabit>
             <ButtonInputHabit
@@ -125,13 +129,3 @@ export default function Habits() {
     </>
   );
 }
-const DaySelect = styled.div`
-  border: 1px solid #d5d5d5;
-  border-radius: 5px;
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.fontcolor};
-  font-size: 20px;
-  margin-right: 4px;
-  background-color: ${(props) => props.backcolor};
-`;
