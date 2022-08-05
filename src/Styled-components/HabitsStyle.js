@@ -95,6 +95,35 @@ const DaySelect = styled.div`
   background-color: ${(props) => props.backcolor};
 `;
 
+const MyHabits = styled.div`
+  background-color: white;
+  width: 88vw;
+  height: 91px;
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  ion-icon {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 18px;
+  }
+  h1 {
+    color: #666666;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  div {
+    display: flex;
+  }
+  div div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 
-export { ButtonInputHabit, AddHabits, HabitsStyle, InputHabit, DaySelect };
+export { ButtonInputHabit, AddHabits, HabitsStyle, InputHabit, DaySelect, MyHabits };
