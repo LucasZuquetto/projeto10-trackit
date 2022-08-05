@@ -33,30 +33,27 @@ export default function Habits() {
     renderHabits();
   }, []);
 
-  function renderHabits (){
+  function renderHabits() {
     getHabits(config).then((e) => {
       console.log(e.data);
       setMyHabits(e.data);
-    })
+    });
   }
   function deleteHabit(event) {
     const HabitIndex = event.target.getAttribute("habitid");
     const promise = deleteHabitRequest(config, HabitIndex);
     console.log(promise);
-    promise.then(() =>
-      renderHabits()
-    );
+    promise.then(() => renderHabits());
   }
 
   function createHabit() {
     const promise = sendHabitInfo({ name: name, days: days }, config);
-    promise.then(() =>{
-      renderHabits()
-      setName('')
-      setDays([])
-    }
-      
-    );
+    promise.then(() => {
+      renderHabits();
+      setName("");
+      setDays([]);
+      setIsCreatingHabit(false);
+    });
   }
 
   function selectDays(dayNumber) {
