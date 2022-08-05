@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
-import { getHabits, sendHabitInfo } from "../services/requests";
+import {
+  deleteHabitRequest,
+  getHabits,
+  sendHabitInfo,
+} from "../services/requests";
 import {
   AddHabits,
   ButtonInputHabit,
@@ -13,8 +16,6 @@ import UserContext from "../UserContext";
 import Footer from "./Footer";
 import Header from "./Header";
 
-//se tiver mais de 1 habito criado, os habitos são listados, e a mensagem desaparece
-//
 export default function Habits() {
   const { UserData } = useContext(UserContext);
   const config = {
@@ -29,15 +30,33 @@ export default function Habits() {
   const [myHabits, setMyHabits] = useState([]);
 
   useEffect(() => {
+    renderHabits();
+  }, []);
+
+  function renderHabits (){
     getHabits(config).then((e) => {
       console.log(e.data);
       setMyHabits(e.data);
-    });
-  }, []);
+    })
+  }
+  function deleteHabit(event) {
+    const HabitIndex = event.target.getAttribute("habitid");
+    const promise = deleteHabitRequest(config, HabitIndex);
+    console.log(promise);
+    promise.then(() =>
+      renderHabits()
+    );
+  }
 
   function createHabit() {
     const promise = sendHabitInfo({ name: name, days: days }, config);
-    promise.then((response) => console.log(response));
+    promise.then(() =>{
+      renderHabits()
+      setName('')
+      setDays([])
+    }
+      
+    );
   }
 
   function selectDays(dayNumber) {
@@ -100,7 +119,11 @@ export default function Habits() {
                 S
               </DaySelect>
             </div>
-            <ion-icon name="trash-outline"></ion-icon>
+            <ion-icon
+              onClick={deleteHabit}
+              habitid={habit.id}
+              name="trash-outline"
+            ></ion-icon>
           </MyHabits>
         ))}
       </div>
