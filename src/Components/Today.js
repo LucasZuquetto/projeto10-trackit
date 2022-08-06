@@ -2,7 +2,13 @@ import Footer from "./Footer";
 import Header from "./Header";
 import DayJS from "react-dayjs";
 import dayjs from "dayjs";
-import { Card, HabitCards, TodayStyle } from "../Styled-components/TodayStyle";
+import {
+  Card,
+  CurrentSequenceSpan,
+  HabitCards,
+  HighestSequenceSpan,
+  TodayStyle,
+} from "../Styled-components/TodayStyle";
 import {
   getTodayHabits,
   RequestHabitDone,
@@ -64,7 +70,7 @@ export default function Today() {
     } else {
       const promise = RequestHabitDone(TodayHabitId, config);
 
-      promise.then((res) => {
+      promise.then(() => {
         renderTodayHabits();
       });
     }
@@ -81,12 +87,24 @@ export default function Today() {
       <Card color={done ? "#8FC549" : "#EBEBEB"}>
         <h2>{habitName}</h2>
         <span>
-          Sequência atual: {currentSequence}{" "}
-          {currentSequence == 1 ? "dia" : "dias"}
+          Sequência atual:{" "}
+          <CurrentSequenceSpan
+            CurrentSequenceColor={done ? "#8FC549" : "#666666"}
+          >
+            {currentSequence} {currentSequence == 1 ? "dia" : "dias"}
+          </CurrentSequenceSpan>
         </span>
         <span>
-          Seu recorde: {highestSequence}{" "}
-          {highestSequence == 1 ? "dia" : "dias"}
+          Seu recorde:{" "}
+          <HighestSequenceSpan
+            HighestSequenceColor={
+              done && highestSequence === currentSequence
+                ? "#8FC549"
+                : "#666666"
+            }
+          >
+            {highestSequence} {highestSequence == 1 ? "dia" : "dias"}
+          </HighestSequenceSpan>
         </span>
         <ion-icon
           onClick={() => SelectHabitDone(id, done)}

@@ -38,7 +38,7 @@ const Card = styled.div`
   box-sizing: border-box;
   padding: 17px 17px;
   position: relative;
-  ion-icon{
+  ion-icon {
     font-size: 50px;
     position: absolute;
     bottom: 15px;
@@ -57,4 +57,16 @@ const Card = styled.div`
     margin-bottom: 2px;
   }
 `;
-export {Card, HabitCards, TodayStyle}
+const CurrentSequenceSpan = styled.span`
+  color: ${(props) => props.CurrentSequenceColor};
+`;
+const HighestSequenceSpan = styled.span`
+  color: ${(props) => props.HighestSequenceColor};
+`;
+export {
+  Card,
+  HabitCards,
+  TodayStyle,
+  HighestSequenceSpan,
+  CurrentSequenceSpan,
+};
