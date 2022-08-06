@@ -1,7 +1,5 @@
 import Footer from "./Footer";
 import Header from "./Header";
-import DayJS from "react-dayjs";
-import dayjs from "dayjs";
 import {
   Card,
   CurrentSequenceSpan,
@@ -20,6 +18,7 @@ import UserContext from "../UserContext";
 export default function Today() {
   const dayjs = require("dayjs");
   const { UserData } = useContext(UserContext);
+  const [count, setCount] = useState()
   const [TodayHabits, setTodayHabits] = useState([]);
 
   const config = {
@@ -56,15 +55,16 @@ export default function Today() {
     promise.then((res) => {
       console.log(res.data);
       setTodayHabits(res.data);
+      setCount(res.data.filter(item => item.done).length)
     });
   }
-
   function SelectHabitDone(TodayHabitId, done) {
     if (done) {
       const promise = RequestHabitUncheck(TodayHabitId, config);
       console.log(promise);
       promise.then((res) => {
         renderTodayHabits();
+        setCount(count-1)
         console.log(res);
       });
     } else {
@@ -72,6 +72,7 @@ export default function Today() {
 
       promise.then(() => {
         renderTodayHabits();
+        setCount(count+1)
       });
     }
   }
@@ -91,7 +92,7 @@ export default function Today() {
           <CurrentSequenceSpan
             CurrentSequenceColor={done ? "#8FC549" : "#666666"}
           >
-            {currentSequence} {currentSequence == 1 ? "dia" : "dias"}
+            {currentSequence} {currentSequence === 1 ? "dia" : "dias"}
           </CurrentSequenceSpan>
         </span>
         <span>
@@ -103,7 +104,7 @@ export default function Today() {
                 : "#666666"
             }
           >
-            {highestSequence} {highestSequence == 1 ? "dia" : "dias"}
+            {highestSequence} {highestSequence === 1 ? "dia" : "dias"}
           </HighestSequenceSpan>
         </span>
         <ion-icon
@@ -123,9 +124,9 @@ export default function Today() {
             {weekdayTranslate()}
             {dayjs().format(", DD/MM")}
           </h1>
-          <p>{TodayHabits.findIndex((item) => item.done == true) === -1
+          <p>{TodayHabits.findIndex((item) => item.done === true) === -1
               ? "Nenhum hábito concluído ainda"
-              : `0% dos habitos concluidos`}</p>
+              : `${((count/TodayHabits.length)*100).toFixed(0)}% dos habitos concluidos`}</p>
         </div>
         <HabitCards>
           {TodayHabits.map((TodayHabit, index) => (
