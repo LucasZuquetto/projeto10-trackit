@@ -31,6 +31,12 @@ function deleteHabitRequest(config, HabitID) {
     config
   );
 }
+function getTodayHabits(config) {
+  return axios.get(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+    config
+  );
+}
 
 export {
   registerUser,
@@ -38,4 +44,5 @@ export {
   sendHabitInfo,
   getHabits,
   deleteHabitRequest,
+  getTodayHabits,
 };

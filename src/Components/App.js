@@ -7,6 +7,7 @@ import Login from "./Login";
 import Register from "./Register";
 import History from "./History";
 import Habits from "./Habits";
+
 //botoes desabilitados no login e register
 //biblioteca spinner
 //progressbar
@@ -14,6 +15,7 @@ import Habits from "./Habits";
 export default function App() {
   const [UserData, setUserData] = useState("");
   //quando reinicia a pagina, os dados são perdidos pq tem q passar pelo login
+  //fazer um hook igual aos prints, armazenar no localStorage o token, se ele n existir, vai pra tela de login
 
   return (
     <>

@@ -43,7 +43,7 @@ const Card = styled.div`
     position: absolute;
     bottom: 15px;
     right: 15px;
-    background-color: #8FC549;
+    background-color: ${(props) => props.color};
     color: white;
     padding: 10px;
     border-radius: 8px;
