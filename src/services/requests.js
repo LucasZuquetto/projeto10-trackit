@@ -37,6 +37,20 @@ function getTodayHabits(config) {
     config
   );
 }
+function RequestHabitDone(TodayHabitId, config) {
+  return axios.post(
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${TodayHabitId}/check`,
+    {},
+    config
+  );
+}
+function RequestHabitUncheck(TodayHabitId, config) {
+  return axios.post(
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${TodayHabitId}/uncheck`,
+    {},
+    config
+  );
+}
 
 export {
   registerUser,
@@ -45,4 +59,6 @@ export {
   getHabits,
   deleteHabitRequest,
   getTodayHabits,
+  RequestHabitDone,
+  RequestHabitUncheck,
 };

@@ -3,7 +3,11 @@ import Header from "./Header";
 import DayJS from "react-dayjs";
 import dayjs from "dayjs";
 import { Card, HabitCards, TodayStyle } from "../Styled-components/TodayStyle";
-import { getTodayHabits } from "../services/requests";
+import {
+  getTodayHabits,
+  RequestHabitDone,
+  RequestHabitUncheck,
+} from "../services/requests";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../UserContext";
 
@@ -11,6 +15,7 @@ export default function Today() {
   const dayjs = require("dayjs");
   const { UserData } = useContext(UserContext);
   const [TodayHabits, setTodayHabits] = useState([]);
+
   const config = {
     headers: {
       Authorization: `Bearer ${UserData.token}`,
@@ -37,20 +42,56 @@ export default function Today() {
     }
   }
   useEffect(() => {
+    renderTodayHabits();
+  }, []);
+
+  function renderTodayHabits() {
     const promise = getTodayHabits(config);
     promise.then((res) => {
       console.log(res.data);
       setTodayHabits(res.data);
     });
-  }, []);
+  }
 
-  function HabitCard({habitName, highestSequence, currentSequence, done}) {
+  function SelectHabitDone(TodayHabitId, done) {
+    if (done) {
+      const promise = RequestHabitUncheck(TodayHabitId, config);
+      console.log(promise);
+      promise.then((res) => {
+        renderTodayHabits();
+        console.log(res);
+      });
+    } else {
+      const promise = RequestHabitDone(TodayHabitId, config);
+
+      promise.then((res) => {
+        renderTodayHabits();
+      });
+    }
+  }
+
+  function HabitCard({
+    habitName,
+    highestSequence,
+    currentSequence,
+    done,
+    id,
+  }) {
     return (
-      <Card color={done ? '#8FC549' : '#EBEBEB'}>
+      <Card color={done ? "#8FC549" : "#EBEBEB"}>
         <h2>{habitName}</h2>
-        <span>Sequência atual: {currentSequence} {currentSequence == 1 ? 'dia' : 'dias'}</span>
-        <span>Seu recorde: {highestSequence} {highestSequence == 1 ? 'dia' : 'dias'}</span>
-        <ion-icon name="checkmark-sharp"></ion-icon>
+        <span>
+          Sequência atual: {currentSequence}{" "}
+          {currentSequence == 1 ? "dia" : "dias"}
+        </span>
+        <span>
+          Seu recorde: {highestSequence}{" "}
+          {highestSequence == 1 ? "dia" : "dias"}
+        </span>
+        <ion-icon
+          onClick={() => SelectHabitDone(id, done)}
+          name="checkmark-sharp"
+        ></ion-icon>
       </Card>
     );
   }
@@ -68,7 +109,14 @@ export default function Today() {
         </div>
         <HabitCards>
           {TodayHabits.map((TodayHabit, index) => (
-            <HabitCard key={index} done={TodayHabit.done} habitName={TodayHabit.name} currentSequence={TodayHabit.currentSequence} highestSequence={TodayHabit.highestSequence} />
+            <HabitCard
+              key={index}
+              id={TodayHabit.id}
+              done={TodayHabit.done}
+              habitName={TodayHabit.name}
+              currentSequence={TodayHabit.currentSequence}
+              highestSequence={TodayHabit.highestSequence}
+            />
           ))}
         </HabitCards>
       </TodayStyle>
