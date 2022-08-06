@@ -123,7 +123,9 @@ export default function Today() {
             {weekdayTranslate()}
             {dayjs().format(", DD/MM")}
           </h1>
-          <p>Nenhum hábito concluído ainda</p>
+          <p>{TodayHabits.findIndex((item) => item.done == true) === -1
+              ? "Nenhum hábito concluído ainda"
+              : `0% dos habitos concluidos`}</p>
         </div>
         <HabitCards>
           {TodayHabits.map((TodayHabit, index) => (
