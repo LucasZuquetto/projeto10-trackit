@@ -7,7 +7,7 @@ const HabitsStyle = styled.div`
   padding-right: 20px;
   padding-top: 120px;
   background-color: #e5e5e5;
-  height: 81vh;
+  height: 85vh;
   p {
     color: #666666;
     font-size: 18px;
@@ -18,12 +18,12 @@ const InputHabit = styled.div`
   flex-direction: column;
   margin-bottom: 30px;
   width: 88vw;
-  height: 180px;
+  height: 190px;
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
   padding: 20px;
   input {
     border: 1px solid #d5d5d5;
@@ -32,6 +32,7 @@ const InputHabit = styled.div`
     border-radius: 5px;
     padding-left: 10px;
     font-size: 21px;
+    
   }
   input:focus {
     outline: none;
@@ -83,6 +84,7 @@ const ButtonInputHabit = styled.div`
   width: 40px;
   margin-left: 40px;
   border-radius: 5px;
+  margin-top: 20px;
 `;
 const DaySelect = styled.div`
   border: 1px solid #d5d5d5;
@@ -93,13 +95,14 @@ const DaySelect = styled.div`
   font-size: 20px;
   margin-right: 4px;
   background-color: ${(props) => props.backcolor};
+  margin-top: 10px;
 `;
 
 const MyHabits = styled.div`
   background-color: white;
   width: 88vw;
   height: 91px;
-  margin-bottom: 10px;
+  margin-bottom: 75px;
   padding: 14px;
   border-radius: 5px;
   box-sizing: border-box;
