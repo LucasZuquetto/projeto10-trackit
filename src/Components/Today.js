@@ -6,6 +6,7 @@ import {
   HabitCards,
   HighestSequenceSpan,
   TodayStyle,
+  PStyle,
 } from "../Styled-components/TodayStyle";
 import {
   getTodayHabits,
@@ -17,15 +18,9 @@ import UserContext from "../UserContext";
 
 export default function Today() {
   const dayjs = require("dayjs");
-  const { UserData } = useContext(UserContext);
-  const [count, setCount] = useState()
+  const { UserData, setUserData } = useContext(UserContext);
+  const [count, setCount] = useState();
   const [TodayHabits, setTodayHabits] = useState([]);
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${UserData.token}`,
-    },
-  };
 
   function weekdayTranslate() {
     const weekday = dayjs().format("dddd");
@@ -47,32 +42,60 @@ export default function Today() {
     }
   }
   useEffect(() => {
-    renderTodayHabits();
+    renderTodayHabits()
   }, []);
 
   function renderTodayHabits() {
+    const localData = JSON.parse(localStorage.getItem("trackit"));
+    setUserData(localData);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${UserData.token}`,
+      },
+    };
     const promise = getTodayHabits(config);
     promise.then((res) => {
-      console.log(res.data);
+      console.log(res);
       setTodayHabits(res.data);
-      setCount(res.data.filter(item => item.done).length)
+      setCount(res.data.filter((item) => item.done).length);
+      setUserData({
+        ...UserData,
+        completed: res.data.filter((habit) => habit.done).length,
+        total: res.data.length,
+      });
     });
   }
   function SelectHabitDone(TodayHabitId, done) {
     if (done) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${UserData.token}`,
+        },
+      };
       const promise = RequestHabitUncheck(TodayHabitId, config);
-      console.log(promise);
       promise.then((res) => {
         renderTodayHabits();
-        setCount(count-1)
-        console.log(res);
+        setCount(count - 1);
+        setUserData({
+          ...UserData,
+          completed: UserData.completed - 1,
+        });
       });
     } else {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${UserData.token}`,
+        },
+      };
       const promise = RequestHabitDone(TodayHabitId, config);
 
       promise.then(() => {
         renderTodayHabits();
-        setCount(count+1)
+        setCount(count + 1);
+        setUserData({
+          ...UserData,
+          completed: UserData.completed + 1,
+        });
       });
     }
   }
@@ -124,9 +147,15 @@ export default function Today() {
             {weekdayTranslate()}
             {dayjs().format(", DD/MM")}
           </h1>
-          <p>{TodayHabits.findIndex((item) => item.done === true) === -1
-              ? "Nenhum hábito concluído ainda"
-              : `${((count/TodayHabits.length)*100).toFixed(0)}% dos habitos concluidos`}</p>
+
+          {TodayHabits.findIndex((item) => item.done === true) === -1 ? (
+            <p>Nenhum hábito concluído ainda</p>
+          ) : (
+            <PStyle>
+              {((count / TodayHabits.length) * 100).toFixed(0)}% dos habitos
+              concluidos
+            </PStyle>
+          )}
         </div>
         <HabitCards>
           {TodayHabits.map((TodayHabit, index) => (

@@ -7,7 +7,6 @@ const HabitsStyle = styled.div`
   padding-right: 20px;
   padding-top: 120px;
   background-color: #e5e5e5;
-  height: 85vh;
   p {
     color: #666666;
     font-size: 18px;
@@ -23,7 +22,7 @@ const InputHabit = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   padding: 20px;
   input {
     border: 1px solid #d5d5d5;
@@ -102,7 +101,7 @@ const MyHabits = styled.div`
   background-color: white;
   width: 88vw;
   height: 91px;
-  margin-bottom: 75px;
+  margin-bottom: 20px;
   padding: 14px;
   border-radius: 5px;
   box-sizing: border-box;
@@ -116,7 +115,7 @@ const MyHabits = styled.div`
   h1 {
     color: #666666;
     font-size: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
   div {
     display: flex;
@@ -127,6 +126,9 @@ const MyHabits = styled.div`
     align-items: center;
   }
 `;
+const HabitsListStyle = styled.div`
+  padding-bottom: 80px;
+`
 
 
-export { ButtonInputHabit, AddHabits, HabitsStyle, InputHabit, DaySelect, MyHabits };
+export { ButtonInputHabit, AddHabits, HabitsStyle, InputHabit, DaySelect, MyHabits, HabitsListStyle };

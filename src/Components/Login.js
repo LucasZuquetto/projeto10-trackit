@@ -28,7 +28,8 @@ export default function Login() {
     console.log(promise);
     promise.then((e) => {
       setUserData(e.data);
-      console.log(e);
+      console.log(e, 'aqui eu');
+      localStorage.setItem("trackit", JSON.stringify({...e.data,formLogin:formLogin}))
       navigate("/hoje");
     });
     promise.catch(() => {

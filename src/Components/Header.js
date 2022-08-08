@@ -1,9 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import UserContext from "../UserContext";
 
 export default function Header() {
-  const { UserData } = useContext(UserContext);
+  const { UserData,setUserData } = useContext(UserContext);
+  useEffect(() =>{
+    const localData = JSON.parse(localStorage.getItem("trackit"));
+    setUserData(localData);
+  },[])
   return (
       <HeaderStyle>
         <span>TrackIt</span>
@@ -23,6 +27,7 @@ const HeaderStyle = styled.div`
   margin-bottom: 80px;
   box-sizing: border-box;
   position: fixed;
+  z-index: 2;
   img {
     width: 51px;
     height: 51px;

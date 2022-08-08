@@ -12,6 +12,7 @@ import {
   HabitsStyle,
   InputHabit,
   MyHabits,
+  HabitsListStyle
 } from "../Styled-components/HabitsStyle";
 import UserContext from "../UserContext";
 import Footer from "./Footer";
@@ -81,7 +82,7 @@ export default function Habits() {
 
   function HabitsList() {
     return (
-      <div>
+      <HabitsListStyle>
         {myHabits.map((habit, index) => (
           <MyHabits key={index}>
             <h1>{habit.name}</h1>
@@ -136,7 +137,7 @@ export default function Habits() {
             ></ion-icon>
           </MyHabits>
         ))}
-      </div>
+      </HabitsListStyle>
     );
   }
   return (

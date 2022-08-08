@@ -63,10 +63,17 @@ const CurrentSequenceSpan = styled.span`
 const HighestSequenceSpan = styled.span`
   color: ${(props) => props.HighestSequenceColor};
 `;
+const PStyle = styled.h4`
+  color: #8FC549;
+  font-size: 18px;
+  padding-bottom: 30px;
+  margin-left: 15px;
+`;
 export {
   Card,
   HabitCards,
   TodayStyle,
   HighestSequenceSpan,
   CurrentSequenceSpan,
+  PStyle,
 };

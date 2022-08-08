@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "../Styled-components/GlobalStyle";
 import UserContext from "../UserContext";
@@ -8,19 +8,18 @@ import Register from "./Register";
 import History from "./History";
 import Habits from "./Habits";
 
-//progressbar
-//quando reinicia a pagina, os dados são perdidos pq tem q passar pelo login
-//fazer um hook igual aos prints, armazenar no localStorage o token, se ele n existir, vai pra tela de login
-//filter e pointer nos botoes
 export default function App() {
   const [UserData, setUserData] = useState("");
-  
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("trackit"));
+    setUserData(localData);
+  },[]);
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ UserData, setUserData }}>
         <BrowserRouter>
+        <UserContext.Provider value={{ UserData, setUserData }}>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Register />} />
@@ -28,8 +27,8 @@ export default function App() {
             <Route path="/historico" element={<History />} />
             <Route path="/habitos" element={<Habits />} />
           </Routes>
+          </UserContext.Provider>
         </BrowserRouter>
-      </UserContext.Provider>
     </>
   );
 }

@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
         line-height: 1;
         font-family: 'Lexend Deca'; /* main font */
         box-sizing: border-box;
+        background-color:#E5E5E5;
     }
     ol, ul {
         list-style: none;

@@ -4,9 +4,11 @@ const LoginStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
+  padding-top: 80px;
   width: 100vw;
   height: 100vh;
+  background-color: white;
+  box-sizing: border-box;
   p {
     color: #52b6ff;
     text-decoration-line: underline;

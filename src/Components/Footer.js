@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { useContext, useEffect } from "react";
+import UserContext from "../UserContext";
 export default function Footer() {
+  
+  
+  const { UserData,setUserData } = useContext(UserContext)
+  useEffect(() =>{
+    const localData = JSON.parse(localStorage.getItem("trackit"));
+    setUserData(localData);
+  },[])
+  let HabitsDonePercentage = (UserData.completed/UserData.total)*100
   return (
     <FooterStyle>
       <Link to="/habitos">
@@ -10,7 +21,18 @@ export default function Footer() {
       <Link to="/historico">
         <span>Histórico</span>
       </Link>
-      <HojeFooter to="/hoje">Hoje</HojeFooter>
+      <HojeFooter to="/hoje">
+        <CircularProgressbar
+          value={HabitsDonePercentage}
+          text="Hoje"
+          styles={buildStyles({
+            textSize: "22px",
+            pathColor: `#FFFFFF`,
+            textColor: "#FFFFFF",
+            trailColor: "#52B6FF",
+          })}
+        />
+      </HojeFooter>
     </FooterStyle>
   );
 }
@@ -28,8 +50,9 @@ const FooterStyle = styled.div`
   font-size: 18px;
   align-items: center;
   background-color: white;
-  span{
-    color:#52b6ff;
+  margin-top: 75px;
+  span {
+    color: #52b6ff;
   }
 `;
 
@@ -45,4 +68,6 @@ const HojeFooter = styled(Link)`
   bottom: 16px;
   left: 38vw;
   color: white;
+  padding: 5px;
+  box-sizing: border-box;
 `;
