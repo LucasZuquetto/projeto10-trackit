@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { loginUser } from "../services/requests";
@@ -8,6 +9,7 @@ import UserContext from "../UserContext";
 export default function Login() {
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formLogin, setFormLogin] = useState({
     email: "",
     password: "",
@@ -21,6 +23,7 @@ export default function Login() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true)
     const promise = loginUser(formLogin);
     console.log(promise);
     promise.then((e) => {
@@ -30,6 +33,7 @@ export default function Login() {
     });
     promise.catch(() => {
       alert("houve um erro no seu login");
+      setIsLoading(false)
     });
   }
   return (
@@ -41,7 +45,9 @@ export default function Login() {
           onChange={handleForm}
           placeholder="email"
           name="email"
-          type="text"
+          type="email"
+          disabled={isLoading}
+          required
         />
         <input
           value={formLogin.password}
@@ -49,8 +55,16 @@ export default function Login() {
           name="password"
           placeholder="senha"
           type="password"
+          disabled={isLoading}
+          required
         />
-        <button type="submit">Entrar</button>
+        {isLoading ? (
+          <button>
+            <ThreeDots color="#FFFFFF"/>
+          </button>
+        ) : (
+          <button type="submit">Entrar</button>
+        )}
       </form>
       <Link to="/cadastro">
         <p>Não tem uma conta? Cadastre-se!</p>

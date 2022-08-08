@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import {
   deleteHabitRequest,
   getHabits,
@@ -24,6 +25,7 @@ export default function Habits() {
     },
   };
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isCreatingHabit, setIsCreatingHabit] = useState(false);
   const [name, setName] = useState("");
   const [days, setDays] = useState([]);
@@ -47,6 +49,7 @@ export default function Habits() {
   }
 
   function createHabit() {
+    setIsLoading(true)
     const promise = sendHabitInfo({ name: name, days: days }, config);
     promise.then(() => {
       renderHabits();
@@ -132,7 +135,8 @@ export default function Habits() {
       <HabitsStyle>
         <AddHabits>
           <h1>Meus hábitos</h1>
-          <div onClick={() => setIsCreatingHabit(true)}>+</div>
+          <div onClick={() => {setIsLoading(false)
+            setIsCreatingHabit(true)}}>+</div>
         </AddHabits>
         <InputHabit display={isCreatingHabit ? "flex" : "none"}>
           <input
@@ -140,6 +144,7 @@ export default function Habits() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            disabled={isLoading}
           />
           <div>
             <DaySelect
@@ -200,13 +205,19 @@ export default function Habits() {
             >
               Cancelar
             </ButtonInputHabit>
-            <ButtonInputHabit
-              onClick={createHabit}
-              color="#FFFFFF"
-              backgroundcolor="#52B6FF"
-            >
-              Salvar
-            </ButtonInputHabit>
+            {isLoading ? (
+              <ButtonInputHabit color="#FFFFFF" backgroundcolor="#52B6FF">
+                <ThreeDots color="#FFFFFF" />
+              </ButtonInputHabit>
+            ) : (
+              <ButtonInputHabit
+                onClick={createHabit}
+                color="#FFFFFF"
+                backgroundcolor="#52B6FF"
+              >
+                Salvar
+              </ButtonInputHabit>
+            )}
           </div>
         </InputHabit>
         {myHabits == false ? (

@@ -3,9 +3,11 @@ import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/requests";
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -22,12 +24,14 @@ export default function Register() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     const promise = registerUser(form);
     promise.then(() => {
       navigate("/");
     });
     promise.catch(() => {
       alert("houve um erro no seu cadastro");
+      setIsLoading(false);
     });
   }
 
@@ -40,7 +44,9 @@ export default function Register() {
           onChange={handleForm}
           placeholder="email"
           name="email"
-          type="text"
+          type="email"
+          disabled={isLoading}
+          required
         />
         <input
           value={form.password}
@@ -48,6 +54,8 @@ export default function Register() {
           placeholder="senha"
           name="password"
           type="password"
+          disabled={isLoading}
+          required
         />
         <input
           value={form.name}
@@ -55,6 +63,8 @@ export default function Register() {
           placeholder="nome"
           name="name"
           type="text"
+          disabled={isLoading}
+          required
         />
         <input
           value={form.image}
@@ -62,8 +72,16 @@ export default function Register() {
           placeholder="foto"
           name="image"
           type="text"
+          disabled={isLoading}
+          required
         />
-        <button type="submit">Registrar</button>
+        {isLoading ? (
+          <button>
+            <ThreeDots color="#FFFFFF" />
+          </button>
+        ) : (
+          <button type="submit">Registrar</button>
+        )}
       </form>
       <Link to="/">
         <p>Não tem uma conta? Cadastre-se!</p>
