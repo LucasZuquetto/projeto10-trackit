@@ -43,12 +43,19 @@ export default function Habits() {
   }
   function deleteHabit(event) {
     const HabitIndex = event.target.getAttribute("habitid");
+    if(!window.confirm('Você realmente deseja excluir esse hábito?')){
+      return
+    }
     const promise = deleteHabitRequest(config, HabitIndex);
     console.log(promise);
     promise.then(() => renderHabits());
   }
 
   function createHabit() {
+    if(name === '' || days.length === 0){
+      alert('Hábito inválido \nVerifique se você preencheu corretamente')
+      return
+    }
     setIsLoading(true)
     const promise = sendHabitInfo({ name: name, days: days }, config);
     promise.then(() => {
@@ -60,6 +67,9 @@ export default function Habits() {
   }
 
   function selectDays(dayNumber) {
+    if(isLoading){
+      return
+    }
     if (days.includes(dayNumber)) {
       let index = days.indexOf(dayNumber);
       days.splice(index, 1);
